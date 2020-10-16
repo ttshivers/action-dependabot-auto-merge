@@ -2,19 +2,7 @@
 
 import semver from 'semver'
 import core from '@actions/core'
-
-const regex = {
-  // semver regex
-  semver: /(?<version>(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)/,
-  // detect dependency name
-  name: /(bump|update) (?<name>(?:@[^\s]+\/)?[^\s]+) (requirement)?/i,
-  // detect dependency type from PR title
-  dev: /\((deps-dev)\):/,
-  // detect security flag
-  security: /(^|: )\[security\]/i,
-  // config values
-  config: /(?<type>security|semver):(?<target>.+)/i
-}
+import regex from './regex.js';
 
 const weight = {
   all: 1000,
@@ -42,8 +30,8 @@ export default function ({ title, labels = [], config = [], dependencies = {} })
   }
 
   // extract version from the title
-  const from = title.match(new RegExp('from v?' + regex.semver.source))?.groups
-  const to = title.match(new RegExp('to v?' + regex.semver.source))?.groups
+  const from = title.match(new RegExp('from v?' + regex.nameWithVersion.source))?.groups
+  const to = title.match(new RegExp('to v?' + regex.nameWithVersion.source))?.groups
 
   if (!to) {
     core.warning('failed to parse title: no recognizable versions')
