@@ -9,7 +9,7 @@ import github from '@actions/github'
 import main from './lib/index.js'
 
   // exit early
-if (github.context.eventName !== 'pull_request') {
+if (!['pull_request_target', 'pull_request'].includes(github.context.eventName)) {
   core.error('action triggered outside of a pull_request')
   process.exit(1)
 }
@@ -26,6 +26,7 @@ if (!sender || !['dependabot[bot]', 'dependabot-preview[bot]'].includes(sender.l
 // parse inputs
 const inputs = {
   token: core.getInput('github-token', { required: true }),
+  config: core.getInput('config', { required: false }),
   target: core.getInput('target', { required: false }),
   command: core.getInput('command', { required: false }),
   approve: core.getInput('approve', { required: false })

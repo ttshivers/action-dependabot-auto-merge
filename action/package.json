@@ -18,11 +18,11 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
-    "js-yaml": "^3.14.0",
-    "semver": "^7.3.2"
+    "js-yaml": "^3.14.1",
+    "semver": "^7.3.4"
   },
   "devDependencies": {
-    "sinon": "^9.2.0",
-    "tap": "^14.10.8"
+    "sinon": "^9.2.4",
+    "tap": "^14.11.0"
   }
 }

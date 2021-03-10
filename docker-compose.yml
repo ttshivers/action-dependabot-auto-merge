@@ -8,18 +8,19 @@ services:
       - ./:/tmp/lint
     environment:
       RUN_LOCAL: 'true'
+      LOG_LEVEL: 'ERROR'
       MULTI_STATUS: 'false'
 
   # ---- readme generator ---- #
   readme:
-    image: pandoc/core
+    image: pandoc/core:2.11.4
     volumes:
       - ./:/data
     command: >-
       --metadata-file=colophon.yml
       --template=docs/README.template
       --output=README.md
-      --from=markdown_github+yaml_metadata_block
+      --from=gfm
       --to=gfm
       --fail-if-warnings
       --wrap=preserve
